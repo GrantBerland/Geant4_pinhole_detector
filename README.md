@@ -1,7 +1,7 @@
 ## Geant4 Pinhole Detector
 
-![Im1](./Im2.png)
+![Im1](./im2.png)
 
-![Im2](./Im1.png)
+![Im2](./im1.png)
 
-![Im3](./Im3.png)
+![Im3](./im3.png)
