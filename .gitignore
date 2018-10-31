@@ -1,0 +1,17 @@
+*.macro
+*.swp
+*.o
+*.odt
+
+__pycache/
+*/__pycache__
+*/*/__pycache__
+*/*/*/__pycache__
+
+/analysis/data/*.txt
+/build
+/results/.idea
+.idea
+/analysis/data/*.csv
+/analysis/*.m~
+/analysis/fncs/__pychache__/*.pyc
