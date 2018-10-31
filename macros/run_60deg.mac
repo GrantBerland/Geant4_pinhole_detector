@@ -19,8 +19,8 @@
 /gps/particle e-
 /gps/position 0 -5 -7 cm
 /gps/pos/type Point
-/gps/direction 0 1 1.73205 # 60 degrees
-/gps/energy 1.5 MeV
+/gps/direction 0 4.445 7 # 60 degrees
+/gps/energy 3 MeV
 
 
-/run/beamOn 100000
+/run/beamOn 100

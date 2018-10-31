@@ -138,7 +138,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   G4double detector1_thickness = 1.*mm;
 
   // Window dimensions
-  G4double window_thickness = 1.*mm;
+  G4double window_thickness = 100.*um;
   G4double window_height    = 5.*cm;  // square window with this side dimension
   G4double window_gap       = 5.*mm;
 
