@@ -127,10 +127,14 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
                     checkOverlaps);          //overlaps checking
 
 
+  std::fstream configFile;
+  configFile.open("../src/pinhole_config.txt", std::ios_base::in);
 
+  G4double pinhole_rad_mm, window_gap_mm, window_thickness_um;
 
+  configFile >> pinhole_rad_mm >> window_gap_mm >> window_thickness_um;
 
-
+  configFile.close();
 
   // Dimensions for detectors (detector 1 and 2 use the same planar dimensions)
   G4double detector_dimX = 5.*cm;
@@ -138,12 +142,12 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   G4double detector1_thickness = 1.*mm;
 
   // Window dimensions
-  G4double window_thickness = 100.*um;
+  G4double window_thickness = window_thickness_um*um;
   G4double window_height    = 5.*cm;  // square window with this side dimension
-  G4double window_gap       = 5.*mm;
+  G4double window_gap       = window_gap_mm*mm;
 
   // Pinhole Dimensions
-  G4double pinhole_radius   = 0.5*mm;
+  G4double pinhole_radius   = pinhole_rad_mm*mm;
 
   G4double foil_thickness   = 10.*um;
   G4double foil_dimX        = 1.*cm;
