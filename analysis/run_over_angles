@@ -21,8 +21,9 @@ def generateAutoRunFile(theta_in_deg, phi_in_deg, n_particles, energy_in_keV):
 
     # Calculate the particle starting position such that hit is in center of window
     y_offset = -5 # cm
-    z_pos = abs(y_offset) * np.tan(theta)
-    x_pos = abs(y_offset) * np.tan(phi)
+    y_offset_pinhole = -0.555  # cm
+    z_pos = abs(y_offset-y_offset_pinhole) * np.tan(theta)
+    x_pos = abs(y_offset-y_offset_pinhole) * np.tan(phi)
 
     position_string = str(x_pos) + ' ' + str(y_offset) + ' ' + str(z_pos)
 
