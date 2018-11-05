@@ -22,9 +22,9 @@ def plotResults(energy):
 
     # Skew normal fit
     #plt.plot(d.index, d['Theta_snormfit'], color='purple', label=None)
-    plt.fill_between(d.index, d['Theta_snormfit']-d['T_s_snf'], d['Theta_snormfit']+d['T_s_snf'],
+    plt.fill_between(d.index, d['Theta_normfit']-d['T_s_nf'], d['Theta_normfit']+d['T_s_nf'],
                      color='orange', alpha=0.5, label=r'1 $\sigma$ confidence')
-    plt.fill_between(d.index, d['Theta_snormfit']-2*d['T_s_snf'], d['Theta_snormfit']+2*d['T_s_snf'],
+    plt.fill_between(d.index, d['Theta_normfit']-2*d['T_s_nf'], d['Theta_normfit']+2*d['T_s_nf'],
                      color='orange', alpha=0.25, label=r'2 $\sigma$ confidence')
     # Actual
     plt.plot(d['Theta_actual'], linestyle='-.', color='r', label='Theta Actual')

@@ -132,7 +132,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   G4double pinhole_rad_mm, window_gap_mm, window_thickness_um;
 
-  configFile >> pinhole_rad_mm >> window_gap_mm >> window_thickness_um;
+  configFile >> pinhole_rad_mm >> window_gap_mm >> window_thickness_um >> foil_t_um;
 
   configFile.close();
 
@@ -149,7 +149,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Pinhole Dimensions
   G4double pinhole_radius   = pinhole_rad_mm*mm;
 
-  G4double foil_thickness   = 10.*um;
+  G4double foil_thickness   = foil_t_um*um;
   G4double foil_dimX        = 1.*cm;
   G4double foil_dimZ        = 1.*cm;
 
