@@ -36,7 +36,7 @@ def plotResults(energy):
     plt.grid()
     plt.legend()
 
-    path = '/home/grant/Documents/Research/Marshall_Research/electron_detector/results/'
+    path = '/home/grant/Documents/Research/Marshall_Research/pinhole_detector/results/'
     fileName = 'angle_est_%i_kev_' % int(energy) + str(time.strftime("%m%d_%H%M%S"))
     f = path + fileName + '.pdf'
 

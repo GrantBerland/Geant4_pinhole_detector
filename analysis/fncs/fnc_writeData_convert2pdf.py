@@ -4,12 +4,11 @@ import subprocess
 
 def writeData_convert2pdf(fileName, det_attributes):
 
-    with open('/home/grant/Documents/Research/Marshall_Research/electron_detector/results/tmp.txt','w') as f:
-        f.write('Detector 1 thickness: %f um\n' % det_attributes[0])
-        f.write('Detector 2 thickness: %f um\n' % det_attributes[1])
-        f.write('Gap between detectors: %f mm\n' % det_attributes[2])
-        f.write('Window thickness: %f um\n' % det_attributes[3])
-        f.write('Gap between window and detector 1: %f mm\n' % det_attributes[4])
+    with open('/home/grant/Documents/Research/Marshall_Research/pinhole_detector/results/tmp.txt','w') as f:
+        f.write('Pinhole radius: %f mm\n' % det_attributes[0])
+        f.write('Gap between window and detector: %f mm\n' % det_attributes[1])
+        f.write('Window thickness: %f um\n' % det_attributes[2])
+        f.write('Shielding foil thickness: %f um\n' % det_attributes[3])
 
 
     bashConvert2PDF = 'unoconv ../results/tmp.txt'
