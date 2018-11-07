@@ -45,7 +45,7 @@
 # Name
 /vis/set/textColour green
 /vis/set/textLayout right
-/vis/scene/add/text2D 0.9 -.9 24 ! ! Electron detector simulation
+/vis/scene/add/text2D 0.9 -.9 24 ! ! Pinhole detector simulation
 /vis/set/textLayout    # Revert to normal (left adjusted) layout
 /vis/set/textColour    # Revert to default text colour (blue)
 

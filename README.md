@@ -1,11 +1,19 @@
 ## Geant4 Pinhole Detector
 
-![Im1](./im2.png)
+#Initial Results:
 
-![Im2](./im1.png)
+![up1](./images/up_graph.png)
 
-![Im3](./im3.png)
+![up2](./images/up_stats.png)
 
-![Im4](./im4.png)
+# Detector Simulation Images:
 
-![Im5](./im5.png)
+![Im1](./images/im2.png)
+
+![Im2](./images/im1.png)
+
+![Im3](./images/im3.png)
+
+![Im4](./images/im4.png)
+
+![Im5](./images/im5.png)

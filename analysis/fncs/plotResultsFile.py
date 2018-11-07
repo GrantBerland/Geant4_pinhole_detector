@@ -42,4 +42,7 @@ def plotResults(energy):
 
     fig.savefig(f, dpi=fig.dpi)
 
-    return fileName
+    stats = []
+    stats.append(d['Theta_std'])
+
+    return fileName, stats

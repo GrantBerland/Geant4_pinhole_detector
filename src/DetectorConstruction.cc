@@ -130,7 +130,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   std::fstream configFile;
   configFile.open("../src/pinhole_config.txt", std::ios_base::in);
 
-  G4double pinhole_rad_mm, window_gap_mm, window_thickness_um;
+  G4double pinhole_rad_mm, window_gap_mm, window_thickness_um, foil_t_um;
 
   configFile >> pinhole_rad_mm >> window_gap_mm >> window_thickness_um >> foil_t_um;
 
