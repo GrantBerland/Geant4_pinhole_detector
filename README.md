@@ -8,6 +8,8 @@
 
 # Detector Simulation Images:
 
+![Beam](./images/circular_beam.png)
+
 ![Im1](./images/im2.png)
 
 ![Im2](./images/im1.png)
