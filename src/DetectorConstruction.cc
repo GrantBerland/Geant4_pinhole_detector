@@ -137,13 +137,13 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   configFile.close();
 
   // Dimensions for detectors (detector 1 and 2 use the same planar dimensions)
-  G4double detector_dimX = 5.*cm;
-  G4double detector_dimZ = 5.*cm;
+  G4double detector_dimX = 6.3*cm;
+  G4double detector_dimZ = 6.3*cm;
   G4double detector1_thickness = 1.*mm;
 
   // Window dimensions
   G4double window_thickness = window_thickness_um*um;
-  G4double window_height    = 5.*cm;  // square window with this side dimension
+  G4double window_height    = 6.3*cm;  // square window with this side dimension
   G4double window_gap       = window_gap_mm*mm;
 
   // Pinhole Dimensions
@@ -226,8 +226,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   pinhole_pos = G4ThreeVector(0, window_pos[1], 0);
 
-  G4RotationMatrix* rm = new G4RotationMatrix();
-  rm->rotateX(90.*deg);
+  G4RotationMatrix* pinhole_rm = new G4RotationMatrix();
+  pinhole_rm->rotateX(90.*deg);
 
   G4VSolid* pinhole_solid = new G4Tubs("pinhole", 0., pinhole_radius, window_thickness,
                                         0.*deg, 360.*deg);
@@ -237,7 +237,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   new G4SubtractionSolid("Pinhole-window",
                           window_solid,
                           pinhole_solid,
-                          rm,
+                          pinhole_rm,
                           G4ThreeVector(0.,0.,0.));
 
   G4LogicalVolume* window =

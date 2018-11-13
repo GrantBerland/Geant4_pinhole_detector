@@ -4,8 +4,13 @@
 /event/verbose 0 
 /tracking/verbose 0 
 /gps/particle e- 
+/gps/pos/type Beam 
+/gps/pos/shape Circle 
+/gps/pos/radius 1.1 mm 
+/gps/pos/sigma_r 0.01 cm 
+/gps/pos/rot1 1 0 0 
+/gps/pos/rot2 0 0 1 
 /gps/energy 1000 keV 
-/gps/position 0.0 -5.555 -0.5078716917679889 
-/gps/direction 0.0 5.555 0.48599952588650785 
-/gps/pos/type Point 
+/gps/pos/centre 0.0 -35 -2.1974384180228643 
+/gps/direction 0.0 35 2.4474384180228643 
 /run/beamOn 1000 
