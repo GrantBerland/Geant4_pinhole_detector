@@ -10,7 +10,7 @@
 /gps/pos/sigma_r 0.01 cm 
 /gps/pos/rot1 1 0 0 
 /gps/pos/rot2 0 0 1 
-/gps/energy 1000 keV 
-/gps/pos/centre 0.0 -35 -2.1974384180228643 
-/gps/direction 0.0 35 2.4474384180228643 
-/run/beamOn 1000 
+/gps/energy 5000 keV 
+/gps/pos/centre 0.0 -9.5 1.1196763274987525 cm
+/gps/direction -0.0 1 -0.17632698070846498 
+/run/beamOn 10000 

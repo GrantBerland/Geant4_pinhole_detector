@@ -14,8 +14,8 @@ def plotResults(energy):
 
     # Mean
     plt.plot(d.index, d['Theta_mean'], color='b', label='Theta Estimate')
-    plt.fill_between(d.index, d['Theta_mean']-d['Theta_std'], d['Theta_mean']+d['Theta_std'],
-                     color='blue', alpha=0.2, label=None)
+    #plt.fill_between(d.index, d['Theta_mean']-d['Theta_std'], d['Theta_mean']+d['Theta_std'],
+    #                 color='blue', alpha=0.2, label=None)
 
     # Median
     #plt.plot(d.index, d['Theta_median'], color='g')

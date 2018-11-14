@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 
-def getDetectorHitData(detector):
+def getDetectorHitData(detector=None):
     detector_hits = pd.read_csv('./data/hits.csv',
                                  names=["x", "y", "z","energy"],
                                  dtype={"x":np.float64,

@@ -127,6 +127,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
                     checkOverlaps);          //overlaps checking
 
 
+  // Read in configurable dimensions from file
   std::fstream configFile;
   configFile.open("../src/pinhole_config.txt", std::ios_base::in);
 
@@ -215,8 +216,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   G4ThreeVector window_pos;
 
-  window_pos = G4ThreeVector(0, -(detector1_thickness/2 + window_thickness/2 + window_gap),  0);
-
+  //window_pos = G4ThreeVector(0, -(detector1_thickness/2 + window_thickness/2 + window_gap),  0);
+  window_pos = G4ThreeVector(0, -window_gap,  0);
 
   // ----------------------------------------------------------------
   // Pinhole in window
@@ -258,7 +259,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
 
   G4Material* foil_material = nist->FindOrBuildMaterial("G4_Al");
-  G4ThreeVector foil_pos = G4ThreeVector(0.,-(window_gap - window_thickness/2 - foil_thickness/2),0.);
+  G4ThreeVector foil_pos = G4ThreeVector(0.,-(window_gap - window_thickness - foil_thickness),0.);
   G4VSolid* foil_solid = new G4Box("foil", foil_dimX, foil_thickness, foil_dimZ);
   G4LogicalVolume* foil = new G4LogicalVolume(foil_solid,
                                               foil_material,

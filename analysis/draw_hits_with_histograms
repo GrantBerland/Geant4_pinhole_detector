@@ -14,15 +14,12 @@ initialPositionData = pd.read_csv("./data/init_pos.csv",
 
 x1, y1 = getDetectorHitData(detector=1)
 
-x2, y2 = getDetectorHitData(detector=2)
-
-
 
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111, projection='3d')
 
 
-hist, xedges, yedges = np.histogram2d(x1, y1, bins=15, range=[[-5, 5], [-5, 5]])
+hist, xedges, yedges = np.histogram2d(x1, y1, bins=15, range=[[-6, 6], [-6, 6]])
 
 xpos, ypos = np.meshgrid(xedges[:-1] + 0.25, yedges[:-1] + 0.25)
 xpos = xpos.flatten('F')
@@ -38,28 +35,5 @@ ax1.bar3d(xpos, ypos, zpos, dx, dy, dz, color='b', zsort='average')
 plt.xlabel("x [cm]")
 plt.ylabel("z [cm]")
 plt.title("Detector 1")
-
-
-fig2 = plt.figure()
-ax2 = fig2.add_subplot(111, projection='3d')
-
-
-hist2, xedges2, yedges2 = np.histogram2d(x2, y2, bins=20, range=[[-5, 5], [-5, 5]])
-
-xpos2, ypos2 = np.meshgrid(xedges2[:-1] + 0.25, yedges2[:-1] + 0.25)
-xpos2 = xpos2.flatten('F')
-ypos2 = ypos2.flatten('F')
-zpos2 = np.zeros_like(xpos2)
-
-# Construct arrays with the dimensions for the 16 bars.
-dx2 = 0.5 * np.ones_like(zpos2)
-dy2 = dx2.copy()
-dz2 = hist2.flatten()
-
-ax2.bar3d(xpos2, ypos2, zpos2, dx2, dy2, dz2, color='b', zsort='average')
-plt.xlabel("x [cm]")
-plt.ylabel("z [cm]")
-plt.title("Detector 2")
-
 
 plt.show()

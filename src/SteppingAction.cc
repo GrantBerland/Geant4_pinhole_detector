@@ -82,7 +82,7 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
 
     std::ofstream hitFile_detector1;
     hitFile_detector1.open("../analysis/data/hits.csv", std::ios_base::app);
-    hitFile_detector1 << "\n" << "," << pos.x()/cm << "," << pos.y()/cm << "," << pos.z()/cm << ","
+    hitFile_detector1 << "\n" << pos.x()/cm << "," << pos.y()/cm << "," << pos.z()/cm << ","
     << ene;
     hitFile_detector1.close();
   }

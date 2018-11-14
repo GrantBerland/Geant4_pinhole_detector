@@ -20,17 +20,18 @@ def generateAutoRunFile(theta_in_deg, phi_in_deg, n_particles, energy_in_keV):
     phi = np.deg2rad(phi_in_deg)
 
     # Calculate the particle starting position such that hit is in the center of the window
-    y_offset = -35 # cm
-    y_dir = abs(y_offset)
+    y_offset = -9.5 # cm
+    y_window = -3.15 # cm
 
-    z_pos = abs(y_offset) * np.tan(theta) + 0.25
-    x_pos = abs(y_offset) * np.tan(phi)
+    z_pos = abs(y_offset-y_window) * np.tan(theta)
+    x_pos = abs(y_offset-y_window) * np.tan(phi)
 
     position_string = str(x_pos) + ' ' + str(y_offset) + ' ' + str(z_pos)
 
     # Calculate initial momentum direction for particle
+    y_dir = 1
     z_dir = -y_dir * np.tan(theta)
-    x_dir = y_dir * np.tan(phi)
+    x_dir = -y_dir * np.tan(phi)
 
     dir_string = str(x_dir) + ' ' + str(y_dir) + ' ' + str(z_dir)
 
@@ -50,7 +51,7 @@ def generateAutoRunFile(theta_in_deg, phi_in_deg, n_particles, energy_in_keV):
         f.write('/gps/pos/rot2 0 0 1 \n')
 
         f.write('/gps/energy ' + str(energy_in_keV) + ' keV \n')
-        f.write('/gps/pos/centre ' + position_string  + ' \n')
+        f.write('/gps/pos/centre ' + position_string  + ' cm\n')
         f.write('/gps/direction ' + dir_string + ' \n')
 
 
@@ -100,25 +101,27 @@ def main():
         print('Please enter energy in keV: ')
         energy = input()
 
+    detector_attributes = []
     #####################################
     ####### Edit these parameters #######
     #####################################
 
     angle_resolution = 1
-    min_angle = -5.
-    max_angle = 5.
+    min_angle = -10.
+    max_angle = 10.
 
-    numberOfParticles = 1000
+    numberOfParticles = 10000
+
+
+    pinhole_radius_mm = 1.5
+    window_gap_mm = 31.5
+    window_thickness_um = 1000.
+    foil_t_um = 10.
+
 
     #####################################
     ####### ^^^^^^^^^^^^^^^^^^^^^ #######
     #####################################
-
-    detector_attributes = []
-    pinhole_radius_mm = 0.5
-    window_gap_mm = 31.5
-    window_thickness_um = 1000.
-    foil_t_um = 10.
 
     detector_attributes.append(pinhole_radius_mm)
     detector_attributes.append(window_gap_mm)
@@ -150,7 +153,7 @@ def main():
             executeAutoRunFile()
 
             # Processes raw hit data into statistical estimates, appends to results.txt
-            calculateAnglePerParticle(window_gap_mm-window_thickness_um*0.001/2-0.5)  # cm
+            calculateAnglePerParticle(window_gap_mm*0.1-window_thickness_um*0.0001/2-0.05)  # cm
 
             # Progress bar update
             pbar.update((max_angle-min_angle)/angle_resolution)
