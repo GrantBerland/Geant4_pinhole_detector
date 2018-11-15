@@ -26,7 +26,7 @@ max_angle = 45.
 numberOfParticles = 10000
 
 
-pinhole_radius_mm = 1.5
+pinhole_radius_mm = 0.75
 window_gap_mm = 31.5
 window_thickness_um = 1000.
 foil_t_um = 10.

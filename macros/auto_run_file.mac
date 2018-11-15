@@ -6,8 +6,8 @@
 /gps/particle e- 
 /gps/pos/type Beam 
 /gps/pos/shape Circle 
-/gps/pos/radius 1.6500000000000001 mm 
-/gps/pos/sigma_r 0.75 mm 
+/gps/pos/radius 0.8250000000000001 mm 
+/gps/pos/sigma_r 0.375 mm 
 /gps/pos/rot1 1 0 0 
 /gps/pos/rot2 0 0 1 
 /gps/energy 5000 keV 
