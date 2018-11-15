@@ -20,13 +20,13 @@ from fncs.write_detector_config_file import writeConfigFile
 #####################################
 
 angle_resolution = 1
-min_angle = -20.
-max_angle = 20.
+min_angle = -45.
+max_angle = 45.
 
 numberOfParticles = 10000
 
 
-pinhole_radius_mm = 0.5
+pinhole_radius_mm = 1.5
 window_gap_mm = 31.5
 window_thickness_um = 1000.
 foil_t_um = 10.
@@ -58,6 +58,7 @@ def generateAutoRunFile(theta_in_deg, phi_in_deg, n_particles, energy_in_keV):
     dir_string = str(x_dir) + ' ' + str(y_dir) + ' ' + str(z_dir)
 
     beam_radius_mm = pinhole_radius_mm*1.1
+    beam_sigma_mm = pinhole_radius_mm*0.5
 
     with open('../macros/auto_run_file.mac', 'w') as f:
         f.write('/run/initialize \n')
@@ -70,7 +71,7 @@ def generateAutoRunFile(theta_in_deg, phi_in_deg, n_particles, energy_in_keV):
         f.write('/gps/pos/type Beam \n')
         f.write('/gps/pos/shape Circle \n')
         f.write('/gps/pos/radius ' + str(beam_radius_mm) + ' mm \n')
-        f.write('/gps/pos/sigma_r 0.01 cm \n')
+        f.write('/gps/pos/sigma_r ' + str(beam_sigma_mm) + ' mm \n')
         f.write('/gps/pos/rot1 1 0 0 \n')
         f.write('/gps/pos/rot2 0 0 1 \n')
 
