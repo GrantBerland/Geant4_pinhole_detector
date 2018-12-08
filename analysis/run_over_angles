@@ -20,13 +20,13 @@ from fncs.write_detector_config_file import writeConfigFile
 #####################################
 
 angle_resolution = 1
-min_angle = -45.
-max_angle = 45.
+min_angle = -20.
+max_angle = 20.
 
 numberOfParticles = 10000
 
 
-pinhole_radius_mm = 0.75
+pinhole_radius_mm = 1.5
 window_gap_mm = 31.5
 window_thickness_um = 1000.
 foil_t_um = 10.
