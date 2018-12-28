@@ -1,4 +1,3 @@
-#!/usr/bin/python3.5
 
 import subprocess
 import os
@@ -10,8 +9,6 @@ import sys
 import time
 
 from fncs.fnc_calc_angle_per_particle import calculateAnglePerParticle
-from fncs.plotResultsFile import plotResults
-from fncs.fnc_writeData_convert2pdf import writeData_convert2pdf
 from fncs.write_detector_config_file import writeConfigFile
 
 
@@ -139,7 +136,7 @@ def main():
     fileName = 'results_' + str(time.strftime("%m%d_%H%M%S")) + '.txt'
 
     writeHeaderLine(fileName)
-    
+
     # adding angle resolution makes the range inclusive on both sides (ie [start, stop])
     for angle in frange(min_angle, max_angle+angle_resolution, angle_resolution):
 

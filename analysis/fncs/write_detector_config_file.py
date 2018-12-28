@@ -1,4 +1,3 @@
-#!/usr/bin/python3.5
 
 def writeConfigFile(pinhole_rad_mm, window_gap_mm, window_t_um, foil_t_um):
     with open('../src/pinhole_config.txt','w') as f:
