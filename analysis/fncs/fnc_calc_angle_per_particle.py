@@ -6,6 +6,8 @@ import numpy as np
 
 from scipy.stats import norm, skewnorm
 
+import time
+
 # Extracts and returns actual inital particle source angles
 from .fnc_findSourceAngle import findSourceAngle
 
@@ -73,7 +75,8 @@ def calculateAnglePerParticle(gap_in_cm):
 
     theta_actual, phi_actual, numberOfParticles = findSourceAngle()
 
-    with open('./data/results.txt', 'a') as f:
+    timeStamp = time.strftime("%m%d_%H%M%S")
+    with open('./data/results_' + str(timeStamp) + '.txt', 'w') as f:
         f.write(str(numberOfParticles) +
         ',' + str(theta_actual) + ',' + str(phi_actual) +
         ',' + str(round(np.mean(theta), 4)) + ',' + str(round(np.std(theta), 4)) +

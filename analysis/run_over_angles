@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-import tqdm
 import sys
 
 from fncs.fnc_calc_angle_per_particle import calculateAnglePerParticle
@@ -20,10 +19,10 @@ from fncs.write_detector_config_file import writeConfigFile
 #####################################
 
 angle_resolution = 1
-min_angle = -20.
-max_angle = 20.
+min_angle = -40.
+max_angle = 40.
 
-numberOfParticles = 10000
+numberOfParticles = 100000
 
 
 pinhole_radius_mm = 1.5
@@ -136,13 +135,10 @@ def main():
                     window_thickness_um, foil_t_um)
 
     # Overwrites whatever results.txt file was already in directory
-    writeHeaderLine()
+    #writeHeaderLine()
 
-    with tqdm.tqdm(total=100, unit_scale=True) as pbar:
         # adding angle resolution makes the range inclusive on both sides (ie [start, stop])
         for angle in frange(min_angle, max_angle+angle_resolution, angle_resolution):
-
-            pbar.set_postfix(angle=angle, refresh=True)
 
             # Generates auto run file given the parameters we wish to simulate over
             generateAutoRunFile(theta_in_deg=angle,
@@ -159,8 +155,6 @@ def main():
             # Processes raw hit data into statistical estimates, appends to results.txt
             calculateAnglePerParticle(window_gap_mm*0.1-window_thickness_um*0.0001/2-0.05)  # cm
 
-            # Progress bar update
-            pbar.update((max_angle-min_angle)/angle_resolution)
 
     # Plots results.txt and saves file to electron_detector/results directory
     fileName, stats = plotResults(energy)
