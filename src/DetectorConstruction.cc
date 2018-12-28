@@ -227,6 +227,24 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   pinhole_pos = G4ThreeVector(0, window_pos[1], 0);
 
+ G4double r[] = {0.0 * mm, 2.0 * mm, 2.0 * mm, 3.0 * mm, 3.0 * mm,
+                 1.0 * mm, 1.0 * mm, 3.0 * mm, 3.0 * mm, 0.0 * mm};
+ G4double z[] = {0.5 *mm, 0.5 * mm, 0.0 * mm, 0.0 * mm, 2.0 * mm,
+                 5.0 * mm, 8.0 * mm, 11.0 * mm, 13 * mm, 13.0 * mm};
+
+  G4VSolid* polyconeSolid = new G4Polycone("aPolyconeSolid",
+                                           0. * deg,
+                                           360. * deg,
+                                           10,
+                                           r,
+                                           z);
+
+
+
+
+
+
+
   G4RotationMatrix* pinhole_rm = new G4RotationMatrix();
   pinhole_rm->rotateX(90.*deg);
 
