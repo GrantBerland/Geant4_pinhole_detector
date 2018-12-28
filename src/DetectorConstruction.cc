@@ -228,27 +228,27 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   pinhole_pos = G4ThreeVector(0, window_pos[1], 0);
 
-  G4RotationMatrix* pinhole_rm = new G4RotationMatrix();
-  pinhole_rm->rotateX(90.*deg);
+  G4RotationMatrix* pinhole_rotm = new G4RotationMatrix();
+  pinhole_rotm->rotateX(90.*deg);
 
-  G4double r[] = {0.0 * mm, 2.0 * mm, 2.0 * mm, 3.0 * mm, 3.0 * mm,
-                 1.0 * mm, 1.0 * mm, 3.0 * mm, 3.0 * mm, 0.0 * mm};
+  G4double r[] = {pinhole_radius, pinhole_radius*2., pinhole_radius,
+                 pinhole_radius, pinhole_radius, pinhole_radius*2, 0.5 * mm, 0.0* mm};
 
-  G4double z[] = {0.5 *mm, 0.5 * mm, 0.0 * mm, 0.0 * mm, 2.0 * mm,
-                 5.0 * mm, 8.0 * mm, 11.0 * mm, 13 * mm, 13.0 * mm};
+  G4double z[] = {0.0 * mm, 0.0 * mm, 0.0 * mm,
+                 10.0 * mm, 5.0 * mm, 10.0 * mm, 9.0 * mm, 8.0 * mm};
 
-  G4VSolid* polyconeSolid = new G4GenericPolycone("aPolyconeSolid",
-                                           0. * deg,
-                                           360. * deg,
-                                           10,
-                                           r,
-                                           z);
+  G4VSolid* new_pinhole = new G4GenericPolycone("aPolyconeSolid",
+                                                  0. * deg,           // start angle phi
+                                                  360. * deg,         // total angle phi_in_deg
+                                                  8,                 // number of coordinates in r, z space
+                                                  r,                  // r-coordinates of corners
+                                                  z);                 // z-coordinates of corners
 
-  G4LogicalVolume* new_pinhole_LV = new G4LogicalVolume(polyconeSolid,
+  G4LogicalVolume* new_pinhole_LV = new G4LogicalVolume(new_pinhole,
                                                       window_material,
                                                       "polyConeLV");
 
-  new G4PVPlacement(pinhole_rm,                       //no rotation
+  new G4PVPlacement(pinhole_rotm,                       //no rotation
                     window_pos,              //at position
                     new_pinhole_LV,                  //its logical volume
                     "new pinhole",                //its name
@@ -266,7 +266,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   new G4SubtractionSolid("Pinhole-window",
                           window_solid,
                           pinhole_solid,
-                          pinhole_rm,
+                          pinhole_rotm,
                           G4ThreeVector(0.,0.,0.));
 
   G4LogicalVolume* window =
