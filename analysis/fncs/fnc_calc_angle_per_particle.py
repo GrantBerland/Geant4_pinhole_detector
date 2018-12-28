@@ -11,7 +11,7 @@ import time
 # Extracts and returns actual inital particle source angles
 from .fnc_findSourceAngle import findSourceAngle
 
-def calculateAnglePerParticle(gap_in_cm):
+def calculateAnglePerParticle(gap_in_cm, fileName):
     # Read in raw hit data
     detector_hits = pd.read_csv('./data/hits.csv',
                                names=["x", "y", "z","energy"],
@@ -48,35 +48,9 @@ def calculateAnglePerParticle(gap_in_cm):
     except:
         pass
 
-    '''
-    # Fit skew normal distribution to data
-    #TODO: write a check for sig_p RuntimeError when np.sqrt(-#)
-    alpha_t, loc_t, scale_t = skewnorm.fit(theta)
-    alpha_p, loc_p, scale_p = skewnorm.fit(phi)
-
-    delta_t = alpha_t/np.sqrt(1+alpha_t**2)
-    delta_p = alpha_t/np.sqrt(1+alpha_p**2)
-
-    mean_t = loc_t + scale_t*delta_t*np.sqrt(2/np.pi)
-    mean_p = loc_p + scale_p*delta_p*np.sqrt(2/np.pi)
-
-    p_test = scale_p**2 * (1 - 2*(delta_p**2)/np.pi)
-    if np.equal(0, np.round(p_test, 2)):
-        sig_p = None
-    else:
-        sig_p = np.sqrt(p_test)
-
-    t_test = scale_t**2 * (1 - 2*(delta_t**2)/np.pi)
-    if np.equal(0, np.round(t_test, 2)):
-        sig_t = None
-    else:
-        sig_t = np.sqrt(t_test)
-    '''
-
     theta_actual, phi_actual, numberOfParticles = findSourceAngle()
 
-    timeStamp = time.strftime("%m%d_%H%M%S")
-    with open('./data/results_' + str(timeStamp) + '.txt', 'w') as f:
+    with open('./data/' + str(fileName), 'a') as f:
         f.write(str(numberOfParticles) +
         ',' + str(theta_actual) + ',' + str(phi_actual) +
         ',' + str(round(np.mean(theta), 4)) + ',' + str(round(np.std(theta), 4)) +
