@@ -37,6 +37,7 @@
 #include "G4Cons.hh"
 #include "G4Orb.hh"
 #include "G4Sphere.hh"
+#include "G4GenericPolycone.hh"
 #include "G4Trd.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
@@ -227,26 +228,35 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   pinhole_pos = G4ThreeVector(0, window_pos[1], 0);
 
- G4double r[] = {0.0 * mm, 2.0 * mm, 2.0 * mm, 3.0 * mm, 3.0 * mm,
+  G4RotationMatrix* pinhole_rm = new G4RotationMatrix();
+  pinhole_rm->rotateX(90.*deg);
+
+  G4double r[] = {0.0 * mm, 2.0 * mm, 2.0 * mm, 3.0 * mm, 3.0 * mm,
                  1.0 * mm, 1.0 * mm, 3.0 * mm, 3.0 * mm, 0.0 * mm};
- G4double z[] = {0.5 *mm, 0.5 * mm, 0.0 * mm, 0.0 * mm, 2.0 * mm,
+
+  G4double z[] = {0.5 *mm, 0.5 * mm, 0.0 * mm, 0.0 * mm, 2.0 * mm,
                  5.0 * mm, 8.0 * mm, 11.0 * mm, 13 * mm, 13.0 * mm};
 
-  G4VSolid* polyconeSolid = new G4Polycone("aPolyconeSolid",
+  G4VSolid* polyconeSolid = new G4GenericPolycone("aPolyconeSolid",
                                            0. * deg,
                                            360. * deg,
                                            10,
                                            r,
                                            z);
 
+  G4LogicalVolume* new_pinhole_LV = new G4LogicalVolume(polyconeSolid,
+                                                      window_material,
+                                                      "polyConeLV");
 
+  new G4PVPlacement(pinhole_rm,                       //no rotation
+                    window_pos,              //at position
+                    new_pinhole_LV,                  //its logical volume
+                    "new pinhole",                //its name
+                    logicEnv,                //its mother  volume
+                    false,                    //no boolean operation
+                    0,                       //copy number
+                    checkOverlaps);          //overlaps checking
 
-
-
-
-
-  G4RotationMatrix* pinhole_rm = new G4RotationMatrix();
-  pinhole_rm->rotateX(90.*deg);
 
   G4VSolid* pinhole_solid = new G4Tubs("pinhole", 0., pinhole_radius, window_thickness,
                                         0.*deg, 360.*deg);
