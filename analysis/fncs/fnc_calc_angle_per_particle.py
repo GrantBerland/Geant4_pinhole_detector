@@ -20,14 +20,8 @@ def calculateAnglePerParticle(gap_in_cm, fileName):
                                engine='c')
 
 
-    n_entries = len(detector_hits['x'])
-
-    if len(detector_hits['x']) == 0:
+    if len(detector_hits['x']) is 0:
         raise ValueError('No particles hits on detector!')
-
-    deltaX = np.zeros(n_entries, dtype=np.float64)
-    deltaZ = np.zeros(n_entries, dtype=np.float64)
-
 
     # Find angles in degrees
     theta = np.rad2deg(np.arctan2(detector_hits["z"], gap_in_cm))
@@ -44,7 +38,13 @@ def calculateAnglePerParticle(gap_in_cm, fileName):
         p_phi = norm.pdf(x_phi, mu_phi, std_phi)
 
     except:
-        pass
+        x_theta = None
+        mu_theta, std_theta = None, None
+        p_theta = None
+
+        x_phi = None
+        mu_phi, std_phi = None, None
+        p_phi = None
 
     theta_actual, phi_actual, numberOfParticles = findSourceAngle()
 
