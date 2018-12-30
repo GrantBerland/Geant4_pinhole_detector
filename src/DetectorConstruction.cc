@@ -224,57 +224,45 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Pinhole in window
   // ----------------------------------------------------------------
 
+  // Global location of pinhole
   G4ThreeVector pinhole_pos;
-
   pinhole_pos = G4ThreeVector(0, window_pos[1], 0);
 
+  // Rotation towards the y-axis
   G4RotationMatrix* pinhole_rotm = new G4RotationMatrix();
   pinhole_rotm->rotateX(90.*deg);
 
-  G4double r[] = {pinhole_radius, pinhole_radius*2., pinhole_radius,
-                 pinhole_radius, pinhole_radius, pinhole_radius*2, 0.5 * mm, 0.0* mm};
+  // Definition of knife-edge pinhole via generic polycone
+  G4double totalLength = 2.0 * mm;
+  G4double r[] = {pinhole_radius*2., pinhole_radius, pinhole_radius*2.};
+  G4double z[] = {0.0 * mm, totalLength/2., totalLength};
 
-  G4double z[] = {0.0 * mm, 0.0 * mm, 0.0 * mm,
-                 10.0 * mm, 5.0 * mm, 10.0 * mm, 9.0 * mm, 8.0 * mm};
-
+  // Construction of knife-edge pinhole
   G4VSolid* new_pinhole = new G4GenericPolycone("aPolyconeSolid",
                                                   0. * deg,           // start angle phi
                                                   360. * deg,         // total angle phi_in_deg
-                                                  8,                 // number of coordinates in r, z space
+                                                  3,                 // number of coordinates in r, z space
                                                   r,                  // r-coordinates of corners
                                                   z);                 // z-coordinates of corners
 
-  G4LogicalVolume* new_pinhole_LV = new G4LogicalVolume(new_pinhole,
-                                                      window_material,
-                                                      "polyConeLV");
 
-  new G4PVPlacement(pinhole_rotm,                       //no rotation
-                    window_pos,              //at position
-                    new_pinhole_LV,                  //its logical volume
-                    "new pinhole",                //its name
-                    logicEnv,                //its mother  volume
-                    false,                    //no boolean operation
-                    0,                       //copy number
-                    checkOverlaps);          //overlaps checking
-
-
-  G4VSolid* pinhole_solid = new G4Tubs("pinhole", 0., pinhole_radius, window_thickness,
-                                        0.*deg, 360.*deg);
-
-  // Subtraction solid that defines the new G4VSolid, rot. and trans. arguments for 2nd solid
+  // Subtraction solid that defines the new G4VSolid (rot. and trans. arguments for 2nd solid)
   G4SubtractionSolid* subtract =
   new G4SubtractionSolid("Pinhole-window",
                           window_solid,
-                          pinhole_solid,
+                          new_pinhole,
                           pinhole_rotm,
-                          G4ThreeVector(0.,0.,0.));
+                          G4ThreeVector(0.,-window_thickness,0.));
 
+
+  // Subtraction solid logical volume
   G4LogicalVolume* window =
   new G4LogicalVolume(subtract,             // its solid
                       window_material,      // its material
                       "window");            // its name
 
 
+  // Placement of window with pinhole in it
   new G4PVPlacement(0,                       //no rotation
                     window_pos,              //at position
                     window,                  //its logical volume
