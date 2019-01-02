@@ -35,7 +35,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(main electron_detector_main.cc ${sources} ${headers})
+add_executable(main pinhole_detector_main.cc ${sources} ${headers})
 target_link_libraries(main ${Geant4_LIBRARIES})
 
 #----------------------------------------------------------------------------
