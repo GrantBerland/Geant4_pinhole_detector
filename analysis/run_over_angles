@@ -15,9 +15,9 @@ from fncs.write_detector_config_file import writeConfigFile
 ####### Edit these parameters #######
 #####################################
 
-angle_resolution = 1
-min_angle = -20.
-max_angle = 20.
+angle_resolution = 2
+min_angle = -10.
+max_angle = 10.
 
 numberOfParticles = 100
 
@@ -100,8 +100,8 @@ def cleanDataDirectory():
     else:
         return
 
-def writeHeaderLine():
-    with open('./data/results.txt', 'w') as f:
+def writeHeaderLine(fileName):
+    with open(fileName, 'w') as f:
         f.write('Number_Particles,Theta_actual,Phi_actual,Theta_mean,Theta_std,Phi_mean,Phi_std,'+
                 'Theta_median,Phi_median,Theta_normfit,T_s_nf,Phi_normfit,P_s_nf\n')
 
@@ -130,10 +130,10 @@ def main():
     writeConfigFile(pinhole_radius_mm, window_gap_mm,
                     window_thickness_um, foil_t_um)
 
-    # Overwrites whatever results.txt file was already in directory
-    writeHeaderLine()
-
     fileName = './data/results_' + str(energy) + 'keV_' + str(time.strftime("%H%M%S")) + '.txt'
+
+    # Overwrites whatever results.txt file was already in directory
+    writeHeaderLine(fileName)
 
     # adding angle resolution makes the range inclusive on both sides (ie [start, stop])
     for angle in frange(min_angle, max_angle+angle_resolution, angle_resolution):
@@ -155,3 +155,4 @@ def main():
 
 if __name__=='__main__':
     main()
+    print('Simulation complete')
