@@ -9,7 +9,7 @@ from .fnc_findSourceAngle import findSourceAngle
 
 def calculateAnglePerParticle(fileName, gap_in_cm):
     # Read in raw hit data
-    detector_hits = pd.read_csv('./data/hits.csv',
+    detector_hits = pd.read_csv('/projects/grbe8029/Geant4_pinhole_detector/analysis/data/hits.csv',
                                names=["x", "y", "z","energy"],
                                dtype={"x":np.float64,
                                "y": np.float64, "z":np.float64, "energy":np.float64},
@@ -19,7 +19,7 @@ def calculateAnglePerParticle(fileName, gap_in_cm):
 
 
     if len(detector_hits['x']) is 0:
-        raise ValueError('No particles hits on detector!')
+        raise ValueError('No particle hits on detector!')
 
 
     # Find angles in degrees

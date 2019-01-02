@@ -15,11 +15,11 @@ from fncs.write_detector_config_file import writeConfigFile
 ####### Edit these parameters #######
 #####################################
 
-angle_resolution = 2
-min_angle = -10.
-max_angle = 10.
+angle_resolution = 1
+min_angle = -45.
+max_angle = 45.
 
-numberOfParticles = 100
+numberOfParticles = 10000
 
 pinhole_radius_mm = 1.0
 window_gap_mm = 31.5
