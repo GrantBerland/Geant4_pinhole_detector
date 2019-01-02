@@ -74,9 +74,9 @@ int main(int argc,char** argv)
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
 
   // Construct the default run manager
-#ifndef G4MULTITHREADED
+#ifdef G4MULTITHREADED
   G4MTRunManager* runManager = new G4MTRunManager;
-  runManager->SetNumberOfThreads(4);  // (Grant's computer)
+  runManager->SetNumberOfThreads(8);
 #else
   G4RunManager* runManager = new G4RunManager;
 #endif
