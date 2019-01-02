@@ -37,11 +37,12 @@
 #include "G4Cons.hh"
 #include "G4Orb.hh"
 #include "G4Sphere.hh"
+#include "G4GenericPolycone.hh"
 #include "G4Trd.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4SystemOfUnits.hh"
-#include "G4SubtractionSolid.hh"
+#include "G4IntersectionSolid.hh"
 #include "G4RotationMatrix.hh"
 
 #include <fstream>
@@ -185,7 +186,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
 
   // ----------------------------------------------------------------
-  // Detector 1 (closest to window)
+  // Detector
   // ----------------------------------------------------------------
 
   // Detector 1 exists at the origin
@@ -212,7 +213,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // ----------------------------------------------------------------
 
   G4Material* window_material = nist->FindOrBuildMaterial("G4_Al");
-  G4VSolid*   window_solid = new G4Box("window", detector_dimX, window_thickness,  window_height);
+  G4VSolid*   window_solid = new G4Box("windowSolid", detector_dimX, window_thickness,  window_height);
 
   G4ThreeVector window_pos;
 
@@ -223,36 +224,50 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Pinhole in window
   // ----------------------------------------------------------------
 
-  G4ThreeVector pinhole_pos;
 
-  pinhole_pos = G4ThreeVector(0, window_pos[1], 0);
+  // Rotation towards the y-axis
+  G4RotationMatrix* pinhole_rotm = new G4RotationMatrix();
+  pinhole_rotm->rotateX(90.*deg);
 
-  G4RotationMatrix* pinhole_rm = new G4RotationMatrix();
-  pinhole_rm->rotateX(90.*deg);
+  // Definition of knife-edge pinhole via generic polycone
+  G4double totalLength = window_thickness*3.;
+  G4double r[] = {pinhole_radius*10., pinhole_radius, pinhole_radius*10.};
+  G4double z[] = {-totalLength/2., 0.0 * mm, totalLength/2.};
 
-  G4VSolid* pinhole_solid = new G4Tubs("pinhole", 0., pinhole_radius, window_thickness,
-                                        0.*deg, 360.*deg);
+  int numElements = sizeof(z)/sizeof(*z);
 
-  // Subtraction solid that defines the new G4VSolid, rot. and trans. arguments for 2nd solid
-  G4SubtractionSolid* subtract =
-  new G4SubtractionSolid("Pinhole-window",
+  // Construction of knife-edge pinhole
+  G4VSolid* new_pinhole = new G4GenericPolycone("aPolyconeSolid",
+                                                  0. * deg,           // start angle phi
+                                                  360. * deg,         // total angle phi_in_deg
+                                                  numElements,        // number of coordinates in r, z space
+                                                  r,                  // r-coordinates of corners
+                                                  z);                 // z-coordinates of corners
+
+
+  // Subtraction solid that defines the new G4VSolid (rot. and trans. arguments for 2nd solid)
+  G4IntersectionSolid* intersect =
+  new G4IntersectionSolid("Pinhole-window",
                           window_solid,
-                          pinhole_solid,
-                          pinhole_rm,
+                          new_pinhole,
+                          pinhole_rotm,
                           G4ThreeVector(0.,0.,0.));
 
+
+  // Subtraction solid logical volume
   G4LogicalVolume* window =
-  new G4LogicalVolume(subtract,             // its solid
+  new G4LogicalVolume(intersect,             // its solid
                       window_material,      // its material
                       "window");            // its name
 
 
+  // Placement of window with pinhole in it
   new G4PVPlacement(0,                       //no rotation
                     window_pos,              //at position
                     window,                  //its logical volume
                     "window",                //its name
                     logicEnv,                //its mother  volume
-                    false,                    //no boolean operation
+                    true,                    //no boolean operation
                     0,                       //copy number
                     checkOverlaps);          //overlaps checking
 

@@ -1,0 +1,43 @@
+[33mbb29266[m HEAD@{0}: checkout: moving from new-pinhole to master
+[33m3aa0c76[m HEAD@{1}: checkout: moving from master to new-pinhole
+[33mbb29266[m HEAD@{2}: checkout: moving from new-pinhole to master
+[33m3aa0c76[m HEAD@{3}: checkout: moving from master to new-pinhole
+[33mbb29266[m HEAD@{4}: merge new-pinhole: Merge made by the 'recursive' strategy.
+[33mec5bfc5[m HEAD@{5}: checkout: moving from new-pinhole to master
+[33m3aa0c76[m HEAD@{6}: commit: finished new pinhole geometry, testing ongoing
+[33m09b653c[m HEAD@{7}: commit: pinhole geometry done, next is placement - scattering still occuring?
+[33mace97f2[m HEAD@{8}: checkout: moving from run-headless to new-pinhole
+[33m79c891f[m HEAD@{9}: commit: similar changes as master
+[33m2491aed[m HEAD@{10}: checkout: moving from master to run-headless
+[33mec5bfc5[m HEAD@{11}: commit: small changes to angle calculation
+[33m6bee0f1[m HEAD@{12}: checkout: moving from run-headless to master
+[33m2491aed[m HEAD@{13}: commit: last headless run changes
+[33m3ce8eee[m HEAD@{14}: checkout: moving from new-pinhole to run-headless
+[33mace97f2[m HEAD@{15}: checkout: moving from run-headless to new-pinhole
+[33m3ce8eee[m HEAD@{16}: commit: git ignore changed to exclude auto generated run file
+[33m1a30fda[m HEAD@{17}: commit: more changes
+[33mcbdcfa1[m HEAD@{18}: commit: shebang line removal
+[33m8508dc2[m HEAD@{19}: commit: removed image and results directories
+[33m56454c2[m HEAD@{20}: commit: testing done on headless execution
+[33mbede2ee[m HEAD@{21}: commit: changes made to run headless
+[33mace97f2[m HEAD@{22}: checkout: moving from new-pinhole to run-headless
+[33mace97f2[m HEAD@{23}: commit: more pinhole development
+[33m9168970[m HEAD@{24}: commit: new pinhole geometry starting to work
+[33mc134381[m HEAD@{25}: commit: new branch
+[33m6bee0f1[m HEAD@{26}: checkout: moving from master to new-pinhole
+[33m6bee0f1[m HEAD@{27}: commit: adding more results
+[33mda988ff[m HEAD@{28}: commit: adding more results plots
+[33m99ed992[m HEAD@{29}: commit: new results
+[33md38fd88[m HEAD@{30}: commit: simulation of 1 mm and 3 mm diameter pinholes
+[33mdc5f85a[m HEAD@{31}: commit: combined results pdfs
+[33mde9480b[m HEAD@{32}: commit: trig figured out, iterating over pinhole sizes
+[33me0e7092[m HEAD@{33}: commit: added another simulation image
+[33md36b8dc[m HEAD@{34}: commit: beam now circular, progess on geometry issues
+[33m8f08cfb[m HEAD@{35}: commit: uploading more images, changes to trig
+[33mbd34cd8[m HEAD@{36}: commit: analysis mostly working, need to fix trig that directs particles to pinhole
+[33m3babfbc[m HEAD@{37}: commit: more changes to calc_angle_per_part to accomodate for one detector
+[33m01d30d8[m HEAD@{38}: commit: changes to python config write script
+[33m8c57c24[m HEAD@{39}: commit: changes to pinhole write-in parameters, next change: auto run file write and analysis
+[33m2710292[m HEAD@{40}: commit: more simulation images
+[33mf3c453c[m HEAD@{41}: commit: fixed readme
+[33md1de17d[m HEAD@{42}: commit (initial): first commit

@@ -42,7 +42,7 @@ def generateAutoRunFile(theta_in_deg, phi_in_deg, n_particles, energy_in_keV):
     phi = np.deg2rad(phi_in_deg)
 
     # Calculate the particle starting position such that hit is in the center of the window
-    y_offset = -9.5 # cm
+    y_offset = -9.5  # cm
     y_window = -3.15 # cm
 
     z_pos = abs(y_offset-y_window) * np.tan(theta)
@@ -57,7 +57,7 @@ def generateAutoRunFile(theta_in_deg, phi_in_deg, n_particles, energy_in_keV):
 
     dir_string = str(x_dir) + ' ' + str(y_dir) + ' ' + str(z_dir)
 
-    beam_radius_mm = pinhole_radius_mm*1.1
+    beam_radius_mm = pinhole_radius_mm
     beam_sigma_mm = pinhole_radius_mm*0.5
 
     with open('../macros/auto_run_file.mac', 'w') as f:
