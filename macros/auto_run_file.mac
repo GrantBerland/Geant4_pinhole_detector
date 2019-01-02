@@ -13,4 +13,4 @@
 /gps/energy 100 keV 
 /gps/pos/centre 0.0 -9.5 2.3112109875903846 cm
 /gps/direction -0.0 1 -0.36397023426620234 
-/run/beamOn 10000 
+/run/beamOn 100
