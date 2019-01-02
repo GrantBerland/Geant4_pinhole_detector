@@ -21,7 +21,7 @@ max_angle = 45.
 
 numberOfParticles = 10000
 
-pinhole_radius_mm = 1.0
+pinhole_radius_mm = 0.5
 window_gap_mm = 31.5
 window_thickness_um = 1000.
 foil_t_um = 10.
@@ -90,7 +90,7 @@ def executeAutoRunFile():
 
 def cleanDataDirectory():
     if 'hits.csv' or 'init_pos.csv' in os.listdir('./data'):
-        bashCleanCommand = 'rm ./data/*.csv'
+        bashCleanCommand = 'rm ./data/hits.csv ./data/init_pos.csv'
         process = subprocess.Popen(bashCleanCommand.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, error = process.communicate()
 
