@@ -43,6 +43,7 @@
 #include "G4PVPlacement.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4SubtractionSolid.hh"
+#include "G4IntersectionSolid.hh"
 #include "G4RotationMatrix.hh"
 
 #include <fstream>
@@ -186,7 +187,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
 
   // ----------------------------------------------------------------
-  // Detector 1 (closest to window)
+  // Detector
   // ----------------------------------------------------------------
 
   // Detector 1 exists at the origin
@@ -213,7 +214,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // ----------------------------------------------------------------
 
   G4Material* window_material = nist->FindOrBuildMaterial("G4_Al");
-  G4VSolid*   window_solid = new G4Box("window", detector_dimX, window_thickness,  window_height);
+  G4VSolid*   window_solid = new G4Box("windowSolid", detector_dimX, window_thickness,  window_height);
 
   G4ThreeVector window_pos;
 
@@ -224,35 +225,38 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Pinhole in window
   // ----------------------------------------------------------------
 
-  // Global location of pinhole
-  G4ThreeVector pinhole_pos;
-  pinhole_pos = G4ThreeVector(0, window_pos[1], 0);
 
   // Rotation towards the y-axis
   G4RotationMatrix* pinhole_rotm = new G4RotationMatrix();
   pinhole_rotm->rotateX(90.*deg);
 
   // Definition of knife-edge pinhole via generic polycone
-  G4double totalLength = 2.0 * mm;
-  G4double r[] = {pinhole_radius*2., pinhole_radius, pinhole_radius*2.};
-  G4double z[] = {0.0 * mm, totalLength/2., totalLength};
+  G4double totalLength = 3.0 * mm;
+  G4double r[] = {pinhole_radius*10., pinhole_radius, pinhole_radius*10.};
+  G4double z[] = {-totalLength/2., 0.0 * mm, totalLength/2.};
+
+  int numElements = sizeof(z)/sizeof(*z);
 
   // Construction of knife-edge pinhole
   G4VSolid* new_pinhole = new G4GenericPolycone("aPolyconeSolid",
                                                   0. * deg,           // start angle phi
                                                   360. * deg,         // total angle phi_in_deg
-                                                  3,                 // number of coordinates in r, z space
+                                                  numElements,        // number of coordinates in r, z space
                                                   r,                  // r-coordinates of corners
                                                   z);                 // z-coordinates of corners
 
+  G4VSolid* testTub = new G4Tubs("pinhole", 0.,
+                                 pinhole_radius, window_thickness,
+                                 0.*deg, 360.*deg);;
 
   // Subtraction solid that defines the new G4VSolid (rot. and trans. arguments for 2nd solid)
-  G4SubtractionSolid* subtract =
-  new G4SubtractionSolid("Pinhole-window",
+  G4IntersectionSolid* subtract =
+  new G4IntersectionSolid("Pinhole-window",
                           window_solid,
                           new_pinhole,
+                          //testTub,
                           pinhole_rotm,
-                          G4ThreeVector(0.,-window_thickness,0.));
+                          G4ThreeVector(0.,0.,0.));
 
 
   // Subtraction solid logical volume
@@ -268,7 +272,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
                     window,                  //its logical volume
                     "window",                //its name
                     logicEnv,                //its mother  volume
-                    false,                    //no boolean operation
+                    true,                    //no boolean operation
                     0,                       //copy number
                     checkOverlaps);          //overlaps checking
 
