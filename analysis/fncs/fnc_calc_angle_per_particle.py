@@ -4,12 +4,10 @@ import numpy as np
 
 from scipy.stats import norm
 
-import time
-
 # Extracts and returns actual inital particle source angles
-from fnc_findSourceAngle import findSourceAngle
+from .fnc_findSourceAngle import findSourceAngle
 
-def calculateAnglePerParticle(gap_in_cm, fileName):
+def calculateAnglePerParticle(fileName, gap_in_cm):
     # Read in raw hit data
     detector_hits = pd.read_csv('./data/hits.csv',
                                names=["x", "y", "z","energy"],
@@ -22,6 +20,7 @@ def calculateAnglePerParticle(gap_in_cm, fileName):
 
     if len(detector_hits['x']) is 0:
         raise ValueError('No particles hits on detector!')
+
 
     # Find angles in degrees
     theta = np.rad2deg(np.arctan2(detector_hits["z"], gap_in_cm))
@@ -48,7 +47,7 @@ def calculateAnglePerParticle(gap_in_cm, fileName):
 
     theta_actual, phi_actual, numberOfParticles = findSourceAngle()
 
-    with open('./data/' + str(fileName), 'a') as f:
+    with open(fileName, 'a') as f:
         f.write(str(numberOfParticles) +
         ',' + str(theta_actual) + ',' + str(phi_actual) +
         ',' + str(round(np.mean(theta), 4)) + ',' + str(round(np.std(theta), 4)) +
