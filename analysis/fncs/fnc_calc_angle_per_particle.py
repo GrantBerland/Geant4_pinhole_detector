@@ -7,7 +7,7 @@ from scipy.stats import norm
 import time
 
 # Extracts and returns actual inital particle source angles
-from .fnc_findSourceAngle import findSourceAngle
+from fnc_findSourceAngle import findSourceAngle
 
 def calculateAnglePerParticle(gap_in_cm, fileName):
     # Read in raw hit data
