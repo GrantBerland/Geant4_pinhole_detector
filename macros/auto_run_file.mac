@@ -6,11 +6,11 @@
 /gps/particle e- 
 /gps/pos/type Beam 
 /gps/pos/shape Circle 
-/gps/pos/radius 1.0 mm 
-/gps/pos/sigma_r 0.5 mm 
+/gps/pos/radius 0.5 mm 
+/gps/pos/sigma_r 0.25 mm 
 /gps/pos/rot1 1 0 0 
 /gps/pos/rot2 0 0 1 
-/gps/energy 3000 keV 
-/gps/pos/centre 0.0 -9.5 -3.37635489105039 cm
-/gps/direction -0.0 1 0.5317094316614788 
-/run/beamOn 10000 
+/gps/energy 2000 keV 
+/gps/pos/centre 0.0 -9.5 1.1196763274987525 cm
+/gps/direction -0.0 1 -0.17632698070846498 
+/run/beamOn 1000 

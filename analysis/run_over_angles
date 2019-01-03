@@ -16,10 +16,10 @@ from fncs.write_detector_config_file import writeConfigFile
 #####################################
 
 angle_resolution = 1
-min_angle = -45.
-max_angle = 45.
+min_angle = -10.
+max_angle = 10.
 
-numberOfParticles = 10000
+numberOfParticles = 1000
 
 pinhole_radius_mm = 0.5
 window_gap_mm = 31.5
@@ -103,7 +103,8 @@ def cleanDataDirectory():
 def writeHeaderLine(fileName):
     with open(fileName, 'w') as f:
         f.write('Number_Particles,Theta_actual,Phi_actual,Theta_mean,Theta_std,Phi_mean,Phi_std,'+
-                'Theta_median,Phi_median,Theta_normfit,T_s_nf,Phi_normfit,P_s_nf\n')
+                'Theta_median,Phi_median,Theta_normfit,Theta_std_nf,Phi_normfit,Phi_std_nf,'+
+                'Theta_skewnormfit,Theta_std_skewnormfit,Phi_skewnormfit,Phi_std_skewnormfit\n')
 
 # Modified range to iterate over floats (i.e. 10.5 degrees, etc.)
 def frange(start, stop, step):
@@ -153,6 +154,6 @@ def main():
         # Processes raw hit data into statistical estimates, appends to results.txt
         calculateAnglePerParticle(fileName, window_gap_mm*0.1-window_thickness_um*0.0001/2-0.05)  # cm
 
-    print('Simulation at %i keV complete' % energy)
+    print('Simulation at %s keV complete' % energy)
 if __name__=='__main__':
     main()

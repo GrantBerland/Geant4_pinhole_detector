@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 
-from scipy.stats import norm
+from scipy.stats import norm, skewnorm
 
 # Extracts and returns actual inital particle source angles
 from .fnc_findSourceAngle import findSourceAngle
@@ -14,7 +14,7 @@ def calculateAnglePerParticle(fileName, gap_in_cm):
                                dtype={"x":np.float64,
                                "y": np.float64, "z":np.float64, "energy":np.float64},
                                delimiter=',',
-                               error_bad_lines=False,
+                               error_bad_lines=True,
                                engine='c')
 
 
@@ -22,29 +22,36 @@ def calculateAnglePerParticle(fileName, gap_in_cm):
         raise ValueError('No particle hits on detector!')
 
 
-    # Find angles in degrees
+    def skewNormStatistics(dataSeries):
+        # Returns skewnorm mean, stddev (see wikipedia for formulas)
+        # alpha ~ shape parameter
+        # loc   ~ location parameter
+        # w     ~ scale parameter
+        alpha, loc, w = skewnorm.fit(dataSeries)
+        delta = alpha / np.sqrt(1 + alpha**2)
+        skewnorm_mean = loc + w*delta*np.sqrt(2/np.pi)
+        skewnorm_var  = (w**2)*(1 - 2*(delta**2)/np.pi)
+        try:
+            skewnorm_std = np.sqrt(skewnorm_var)
+        except:
+            skewnorm_std = 999
+
+        return (skewnorm_mean, skewnorm_std)
+
+
+    # Find angles in degrees for centered pinhole in X, Z plane
     theta = np.rad2deg(np.arctan2(detector_hits["z"], gap_in_cm))
     phi = np.rad2deg(np.arctan2(detector_hits["x"], gap_in_cm))
 
     # Fit a standard normal distribution to data
-    try:
-        x_theta = np.linspace(min(theta), max(theta))
-        mu_theta, std_theta = norm.fit(theta)
-        p_theta = norm.pdf(x_theta, mu_theta, std_theta)
+    mu_theta, std_theta = norm.fit(theta)
+    mu_phi, std_phi = norm.fit(phi)
 
-        x_phi = np.linspace(min(phi), max(phi))
-        mu_phi, std_phi = norm.fit(phi)
-        p_phi = norm.pdf(x_phi, mu_phi, std_phi)
+    # Fit a skew normal distribution to data
+    mu_theta_SN, std_theta_SN = skewNormStatistics(theta)
+    mu_phi_SN, std_phi_SN = skewNormStatistics(phi)
 
-    except:
-        x_theta = None
-        mu_theta, std_theta = None, None
-        p_theta = None
-
-        x_phi = None
-        mu_phi, std_phi = None, None
-        p_phi = None
-
+    # Truth value of theta and phi
     theta_actual, phi_actual, numberOfParticles = findSourceAngle()
 
     with open(fileName, 'a') as f:
@@ -54,4 +61,6 @@ def calculateAnglePerParticle(fileName, gap_in_cm):
         ',' + str(round(np.mean(phi), 4)) + ',' + str(round(np.std(phi), 4)) +
         ',' + str(round(np.median(theta), 4)) + ',' + str(round(np.median(phi), 4)) +
         ',' + str(round(mu_theta, 4)) + ',' + str(round(std_theta, 4)) +
-        ',' + str(round(mu_phi, 4)) + ',' + str(round(std_phi, 4)) + '\n')
+        ',' + str(round(mu_phi, 4)) + ',' + str(round(std_phi, 4)) +
+        ',' + str(round(mu_theta_SN, 4)) + ',' + str(round(std_theta_SN, 4)) +
+        ',' + str(round(mu_phi_SN, 4)) + ',' + str(round(std_phi_SN, 4)) + '\n')
