@@ -13,8 +13,7 @@ def calculateAnglePerParticle(fileName, gap_in_cm):
                                names=["x", "y", "z","energy"],
                                dtype={"x":np.float64,
                                "y": np.float64, "z":np.float64, "energy":np.float64},
-                               delimiter=',',
-                               error_bad_lines=True,
+                               sep=',',
                                engine='c')
 
 
