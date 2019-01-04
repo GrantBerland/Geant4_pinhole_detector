@@ -16,8 +16,8 @@ from fncs.write_detector_config_file import writeConfigFile
 #####################################
 
 angle_resolution = 1
-min_angle = -10.
-max_angle = 10.
+min_angle = -45.
+max_angle = 45.
 
 numberOfParticles = 10000
 
