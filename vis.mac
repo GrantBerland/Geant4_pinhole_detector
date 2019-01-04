@@ -6,7 +6,7 @@
 # Disable auto refresh and quieten vis messages whilst scene and
 # trajectories are established:
 /vis/viewer/set/autoRefresh false
-/vis/verbose errors
+/vis/verbose 0
 
 # Draw geometry:
 /vis/drawVolume
@@ -73,7 +73,7 @@
 
 # Re-establish auto refreshing and verbosity:
 /vis/viewer/set/autoRefresh true
-/vis/verbose warnings
+/vis/verbose 0
 
 # For file-based drivers, use this to create an empty detector view:
 #/vis/drawVolume

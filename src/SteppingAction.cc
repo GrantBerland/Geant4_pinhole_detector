@@ -57,20 +57,24 @@ SteppingAction::~SteppingAction()
 
 void SteppingAction::UserSteppingAction(const G4Step* step)
 {
-
-
   G4bool isEnteringDetector1;
 
   G4Track* track = step->GetTrack();
   const G4StepPoint* postPoint = step->GetPostStepPoint();
 
   G4String volName;
-  if (track->GetVolume()) {volName = track->GetVolume()->GetName();}
   G4String nextVolName;
   if (track->GetNextVolume()) {nextVolName = track->GetNextVolume()->GetName();}
 
-
-  isEnteringDetector1 = (volName != "detector1" && nextVolName == "detector1");
+  // Checks if the next volume name is detector1. If so,
+  // checks if current volume name is outside of the detector
+  if (nextVolName == "detector1"){
+    if (track->GetVolume()) {volName = track->GetVolume()->GetName();}
+    isEnteringDetector1 = (volName != "detector1");
+  }
+  else{
+    isEnteringDetector1 = false;
+  }
 
   // Detector 1 particles
   if (isEnteringDetector1){
