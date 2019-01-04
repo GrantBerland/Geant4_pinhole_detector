@@ -56,25 +56,6 @@ EventAction::~EventAction()
 void EventAction::BeginOfEventAction(const G4Event* event)
 {
 
-  // Writes particle initial positions to file
-  std::ofstream initialPositionsFile;
-
-  G4ThreeVector mom;
-
-  initialPositionsFile.open("../analysis/data/init_pos.csv", std::ios_base::app);
-  if(initialPositionsFile.is_open())
-  {
-    initialPositionsFile << event->GetPrimaryVertex()->GetX0() / cm << ","
-    << event->GetPrimaryVertex()->GetY0() / cm << ","
-    << event->GetPrimaryVertex()->GetZ0() / cm << ","
-    << event->GetPrimaryVertex()->GetPrimary()->GetMomentumDirection().x() << ","
-    << event->GetPrimaryVertex()->GetPrimary()->GetMomentumDirection().y() << ","
-    << event->GetPrimaryVertex()->GetPrimary()->GetMomentumDirection().z() << "\n";
-
-    initialPositionsFile.close();
-
-
-  }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

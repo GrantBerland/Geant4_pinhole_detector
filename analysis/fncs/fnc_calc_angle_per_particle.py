@@ -4,10 +4,8 @@ import numpy as np
 
 from scipy.stats import norm, skewnorm
 
-# Extracts and returns actual inital particle source angles
-from .fnc_findSourceAngle import findSourceAngle
 
-def calculateAnglePerParticle(fileName, gap_in_cm):
+def calculateAnglePerParticle(fileName, gap_in_cm, theta_actual, phi_actual, numParticles):
     # Read in raw hit data
     detector_hits = pd.read_csv('./data/hits.csv',
                                names=["x", "y", "z","energy"],
@@ -30,9 +28,9 @@ def calculateAnglePerParticle(fileName, gap_in_cm):
         delta = alpha / np.sqrt(1 + alpha**2)
         skewnorm_mean = loc + w*delta*np.sqrt(2/np.pi)
         skewnorm_var  = (w**2)*(1 - 2*(delta**2)/np.pi)
-        try:
+        if skewnorm_var >= 0:
             skewnorm_std = np.sqrt(skewnorm_var)
-        except:
+        else:
             skewnorm_std = 999
 
         return (skewnorm_mean, skewnorm_std)
@@ -50,11 +48,9 @@ def calculateAnglePerParticle(fileName, gap_in_cm):
     mu_theta_SN, std_theta_SN = skewNormStatistics(theta)
     mu_phi_SN, std_phi_SN = skewNormStatistics(phi)
 
-    # Truth value of theta and phi
-    theta_actual, phi_actual, numberOfParticles = findSourceAngle()
 
     with open(fileName, 'a') as f:
-        f.write(str(numberOfParticles) +
+        f.write(str(numParticles) +
         ',' + str(theta_actual) + ',' + str(phi_actual) +
         ',' + str(round(np.mean(theta), 4)) + ',' + str(round(np.std(theta), 4)) +
         ',' + str(round(np.mean(phi), 4)) + ',' + str(round(np.std(phi), 4)) +
