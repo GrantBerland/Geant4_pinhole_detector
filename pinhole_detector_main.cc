@@ -57,7 +57,11 @@
 #include "G4SystemOfUnits.hh"
 #include "Randomize.hh"
 
+#include <cstdio>
+#include <string>
 
+
+extern std::string hitsFileName = tmpnam(nullptr);
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -70,13 +74,17 @@ int main(int argc,char** argv)
     ui = new G4UIExecutive(argc, argv);
   }
 
+  // Removes /tmp/... path prefix from hitsFileName
+  hitsFileName.erase(0, 5);
+  G4cout << hitsFileName << G4endl;
+
   // Choose the Random engine
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
 
   // Construct the default run manager
 #ifdef G4MULTITHREADED
   G4MTRunManager* runManager = new G4MTRunManager;
-  runManager->SetNumberOfThreads(24);
+  runManager->SetNumberOfThreads(4);
 #else
   G4RunManager* runManager = new G4RunManager;
 #endif

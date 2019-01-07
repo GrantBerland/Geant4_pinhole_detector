@@ -8,9 +8,8 @@ from scipy.stats import norm, skewnorm
 def calculateAnglePerParticle(fileName, gap_in_cm, theta_actual, phi_actual, numParticles):
     # Read in raw hit data
     detector_hits = pd.read_csv('./data/hits.csv',
-                               names=["x", "y", "z","energy"],
-                               dtype={"x":np.float64,
-                               "y": np.float64, "z":np.float64, "energy":np.float64},
+                               names=["x", "z", "energy"],
+                               dtype={"x":np.float64,"z":np.float64,"energy":np.float64},
                                sep=',',
                                engine='c')
 

@@ -39,7 +39,12 @@
 #include "G4LogicalVolume.hh"
 #include "G4SystemOfUnits.hh"
 
+#include "G4AutoLock.hh"
 #include <fstream>
+#include <string>
+
+// Global for randomized hit filename
+extern std::string hitsFileName;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -79,16 +84,27 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
   // Detector 1 particles
   if (isEnteringDetector1){
 
-    fEventAction->incrementDetector1Flag();
+    // Lock thread during hit event and writing
+    G4Mutex aMutex = G4MUTEX_INITIALIZER;
+    G4AutoLock l(&aMutex);
 
     G4ThreeVector pos = postPoint->GetPosition();
     G4double ene = postPoint->GetKineticEnergy();
 
     std::ofstream hitFile_detector1;
-    hitFile_detector1.open("../analysis/data/hits.csv", std::ios_base::app);
-    hitFile_detector1 << "\n" << pos.x()/cm << "," << pos.y()/cm << "," << pos.z()/cm << ","
+
+    // Grab full filename of tmp hits file per Geant instance
+    std::string fullFileName = "../analysis/data/";
+    fullFileName += hitsFileName;
+    fullFileName += ".csv";
+
+    hitFile_detector1.open(fullFileName, std::ios_base::app);
+    hitFile_detector1 << "\n" << pos.x()/cm << "," << pos.z()/cm << ","
     << ene;
     hitFile_detector1.close();
+
+    G4cout << hitsFileName << G4endl;
+
   }
 
 
