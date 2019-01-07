@@ -84,7 +84,8 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
   // Detector 1 particles
   if (isEnteringDetector1){
 
-    // Lock thread during hit event and writing
+    // Lock thread during hit event and writing,
+    // auto unlocks on step outside scope
     G4Mutex aMutex = G4MUTEX_INITIALIZER;
     G4AutoLock l(&aMutex);
 
@@ -103,10 +104,7 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
     << ene;
     hitFile_detector1.close();
 
-    G4cout << hitsFileName << G4endl;
-
   }
-
 
 }
 

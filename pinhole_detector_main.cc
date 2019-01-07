@@ -60,7 +60,8 @@
 #include <cstdio>
 #include <string>
 
-
+// Unique file name for particle hit file called per Geant instance
+// (Ignore the warning this line causes (live dangerously))
 extern std::string hitsFileName = tmpnam(nullptr);
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -84,7 +85,7 @@ int main(int argc,char** argv)
   // Construct the default run manager
 #ifdef G4MULTITHREADED
   G4MTRunManager* runManager = new G4MTRunManager;
-  runManager->SetNumberOfThreads(4);
+  runManager->SetNumberOfThreads(2);
 #else
   G4RunManager* runManager = new G4RunManager;
 #endif
@@ -106,7 +107,6 @@ int main(int argc,char** argv)
   // runManager->SetUserInitialization(new PhysicsList);
 
   RunAction* theRunAction = new RunAction;
-
 
   // Initialize visualization
   //

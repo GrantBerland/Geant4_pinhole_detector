@@ -5,9 +5,9 @@ import numpy as np
 from scipy.stats import norm, skewnorm
 
 
-def calculateAnglePerParticle(fileName, gap_in_cm, theta_actual, phi_actual, numParticles):
+def calculateAnglePerParticle(fileName, hit_fileName, gap_in_cm, theta_actual, phi_actual, numParticles):
     # Read in raw hit data
-    detector_hits = pd.read_csv('./data/hits.csv',
+    detector_hits = pd.read_csv('./data/' + str(hit_fileName) + '.csv',
                                names=["x", "z", "energy"],
                                dtype={"x":np.float64,"z":np.float64,"energy":np.float64},
                                sep=',',

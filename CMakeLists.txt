@@ -71,4 +71,3 @@ add_custom_target(B1 DEPENDS main)
 #
 install(TARGETS main DESTINATION bin)
 
-
