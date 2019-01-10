@@ -100,7 +100,8 @@ def cleanDataDirectory(hit_fileName):
             pass
 
     else:
-        return
+        # Halts execution, since there was probably something wrong with the simulation
+        raise FileNotFoundError('File %s not found!' % str(hit_fileName))
 
 def writeHeaderLine(results_fileName):
     with open(results_fileName, 'w') as f:

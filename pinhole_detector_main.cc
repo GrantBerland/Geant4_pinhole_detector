@@ -77,6 +77,8 @@ int main(int argc,char** argv)
 
   // Removes /tmp/... path prefix from hitsFileName
   hitsFileName.erase(0, 5);
+
+  // Prepends unique filename to Geant output, picked up by analysis script
   G4cout << hitsFileName << G4endl;
 
   // Choose the Random engine
